@@ -1,0 +1,21 @@
+[
+    {
+      "image": "/images/category1.png",
+      "title": "Marketplace",
+      "description": "Put your products on our marketplace to reach a wider audience.",
+      "link": "https://zuke.co.za/join?type=marketplace&source=website_main"
+    },
+    {
+      "image": "/images/category2.jpg",
+      "title": "AI Agents",
+      "description": "Allow our AI Agent Neo create marketing content for your business.",
+      "link": "https://zuke.co.za/join?type=ia_agents&source=website_main"
+    },
+    {
+      "image": "/images/category3.jpg",
+      "title": "Creative",
+      "description": "From marketing posts to banners and photo shoots tailored to your need.",
+      "link": "https://zuke.co.za/join?type=creative_join&source=website_main"
+    }
+  ]
+  
