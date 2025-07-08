@@ -16,6 +16,18 @@
       "title": "Creative",
       "description": "From marketing posts to banners and photo shoots tailored to your need.",
       "link": "https://zuke.co.za/join?type=creative_join&source=website_main"
+    },
+    {
+      "image": "/images/quiz.png",
+      "title": "The Hustle Quiz",
+      "description": "Is your brand a hustle or a business? Take the questionnaire.",
+      "link": "https://zuke.co.za/join?type=marketplace&source=website_main"
+    },
+    {
+      "image": "/images/influencer.jpg",
+      "title": "Become an Influencer",
+      "description": "Be part of our creative community, professional model or not.",
+      "link": "https://zuke.co.za/join?type=ia_agents&source=website_main"
     }
   ]
   

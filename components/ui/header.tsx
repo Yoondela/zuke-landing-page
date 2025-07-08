@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <header className="z-30 mt-2 w-full md:mt-5">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="relative flex h-14 items-center justify-between gap-3 px-3 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500">
+        <div className="relative flex h-14 items-center justify-between gap-3 px-3">
           {/* Site branding */}
           <div className="flex flex-1 items-center">
             <h2 className="font-extrabold text-4x1">ZUKE</h2>
