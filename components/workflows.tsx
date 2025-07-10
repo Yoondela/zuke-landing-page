@@ -3,12 +3,12 @@
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import cards from "@/data/card-data.json";
-import ArrowIcon from "@/components/arrow-icon";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Workflows() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [cardList, setCardList] = useState([...cards, ...cards, ...cards, ...cards]); // duplicate cards for infinite feel
+  const [cardList, setCardList] = useState([...cards, ...cards, ...cards, ...cards]);
+  const [loadingIndex, setLoadingIndex] = useState<number | null>(null);
 
   const scrollLeft = () => {
     if (!scrollRef.current) return;
@@ -20,17 +20,32 @@ export default function Workflows() {
     scrollRef.current.scrollBy({ left: 400, behavior: "smooth" });
   };
 
-  // Reset scroll when reaching start or end
+  const handleGetStarted = async (link: string, index: number) => {
+    setLoadingIndex(index);
+  
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts/1"); // Replace with your real API
+      const data = await response.json();
+  
+      console.log("API Result:", data);
+  
+      window.open(link, "_blank", "noopener,noreferrer");
+    } catch (error) {
+      console.error("Failed to fetch:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoadingIndex(null);
+    }
+  };
+  
+
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
 
     const handleScroll = () => {
       const maxScroll = el.scrollWidth - el.clientWidth;
-
-      if (el.scrollLeft <= 0) {
-        el.scrollLeft = maxScroll / 2;
-      } else if (el.scrollLeft >= maxScroll) {
+      if (el.scrollLeft <= 0 || el.scrollLeft >= maxScroll) {
         el.scrollLeft = maxScroll / 2;
       }
     };
@@ -72,34 +87,56 @@ export default function Workflows() {
           >
             <div className="flex gap-6 min-w-[1100px] pb-3">
               {cardList.map((card, index) => (
-                <a
+                <div
                   key={index}
-                  href={card.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-w-[320px] max-w-[350px] flex-shrink-0 group/card relative overflow-hidden rounded-2xl bg-gray-800 p-px"
+                  className="min-w-[320px] max-w-[350px] flex-shrink-0 relative overflow-hidden rounded-2xl bg-gray-800 p-px"
                 >
-                  <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-linear-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
-                    <ArrowIcon />
-                    <Image
-                      className="inline-flex"
-                      src={card.image}
-                      width={350}
-                      height={288}
-                      alt={card.title}
-                    />
-                    <div className="p-6">
-                      <div className="mb-3">
-                        <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal hover:bg-gray-800/60">
-                          <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                            {card.title}
+                  <div className="relative z-10 h-full overflow-hidden rounded-[inherit] bg-gray-950 flex flex-col justify-between">
+                    <div className="relative z-10">
+                      <Image
+                        className="inline-flex"
+                        src={card.image}
+                        width={350}
+                        height={200}
+                        alt={card.title}
+                      />
+                      <div className="p-6">
+                        <div className="mb-3">
+                          <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal hover:bg-gray-800/60">
+                            <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+                              {card.title}
+                            </span>
                           </span>
-                        </span>
+                        </div>
+                        <p className="text-indigo-200/65">{card.description}</p>
                       </div>
-                      <p className="text-indigo-200/65">{card.description}</p>
+                    </div>
+
+                    <div className="p-6 pt-0 relative z-10">
+                      <button
+                        onClick={() => handleGetStarted(card.link, index)}
+                        className={`w-full rounded-lg py-2 text-sm font-semibold transition flex items-center justify-center ${
+                          loadingIndex === index
+                            ? "bg-indigo-400 cursor-not-allowed"
+                            : "bg-indigo-600 hover:bg-indigo-500"
+                        } text-white`}
+                        disabled={loadingIndex === index}
+                      >
+                        {loadingIndex === index ? (
+                          <span className="flex items-center gap-2">
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                            Loading...
+                          </span>
+                        ) : (
+                          "Get Started"
+                        )}
+                      </button>
                     </div>
                   </div>
-                </a>
+
+                  {/* Background overlay */}
+                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900/50 via-gray-800/25 to-gray-900/50 rounded-[inherit]" />
+                </div>
               ))}
             </div>
           </div>
