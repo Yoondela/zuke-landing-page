@@ -1,17 +1,24 @@
 "use client";
 
 import Link from "next/link";
-// import Logo from "./logo";
+import Image from "next/image";  // ✅ Import Image component
 
 export default function Header() {
   return (
     <header className="z-30 mt-2 w-full md:mt-5">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative flex h-14 items-center justify-between gap-3 px-3">
-          {/* Site branding */}
+          
+          {/* Site branding with logo */}
           <div className="flex flex-1 items-center">
-            <h2 className="font-extrabold text-4x1">ZUKE</h2>
-            {/* <Logo /> */}
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src="/logo.svg"        // ✅ Make sure your logo.svg is inside /public
+                alt="Zuke Logo"
+                width={100}             // ✅ You can adjust this
+                height={100}
+              />
+            </Link>
           </div>
 
           {/* Desktop sign in links */}
